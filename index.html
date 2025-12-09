@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roleta de Filmes</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout-container">
+      <div class="col-side col-left">
+        <div class="list-box user-me">
+          <h3>Minha Lista 🟢</h3>
+          <div class="input-group">
+            <input type="text" id="input-me" placeholder="Filme..." />
+            <button onclick="addItem('me')">+</button>
+          </div>
+          <ul id="list-me"></ul>
+        </div>
+      </div>
+
+      <div class="col-center">
+
+        <div class="priority-control">
+          <div class="slider-wrapper">
+            <span>Eu</span>
+            <input
+              type="range"
+              id="slider"
+              min="0"
+              max="100"
+              value="50"
+              oninput="updatePercentage()"
+            />
+            <span>Ela</span>
+          </div>
+          <div class="percentage-display">
+            <span id="perc-me" style="color: #4caf50">50%</span>
+            <span id="perc-friend" style="color: #e91e63">50%</span>
+          </div>
+        </div>
+
+        <div class="wheel-container">
+          <div class="pointer">▼</div>
+          <canvas id="wheelCanvas" width="500" height="500"></canvas>
+        </div>
+
+        <button id="btn-spin" onclick="spinWheel()">GIRAR A ROLETA!</button>
+      </div>
+
+      <div class="col-side col-right">
+        <div class="list-box user-friend">
+          <h3>Lista Dela 🔴</h3>
+          <div class="input-group">
+            <input type="text" id="input-friend" placeholder="Filme..." />
+            <button onclick="addItem('friend')">+</button>
+          </div>
+          <ul id="list-friend"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="result-modal" class="modal">
+      <div class="modal-content">
+        <h3>Vamos assistir:</h3>
+        <h1 id="winner-text">...</h1>
+        <p id="winner-source">...</p>
+        <button onclick="closeModal()">Fechar</button>
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

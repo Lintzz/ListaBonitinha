@@ -1,0 +1,297 @@
+/* Reset Básico */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1a1a1a;
+  color: white;
+  margin: 0;
+  /* Removemos o height: 100vh fixo para evitar que esmague as coisas em telas pequenas */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centraliza tudo verticalmente na tela */
+  padding: 20px;
+}
+
+/* CONTAINER PRINCIPAL */
+.layout-container {
+  display: flex;
+  justify-content: center; /* Junta as colunas no meio */
+  align-items: flex-start; /* Alinha tudo pelo topo */
+  width: 100%;
+  max-width: 1200px; /* Limite para não ficar esticado em monitores ultrawide */
+  gap: 30px; /* Espaço entre as colunas */
+}
+
+/* COLUNAS LATERAIS (AS LISTAS) */
+.col-side {
+  /* Tamanho FIXO para as listas. Elas não esticam nem encolhem. */
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo da Caixa da Lista */
+.list-box {
+  background: #2b2b2b;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+  /* Altura FIXA para garantir que as duas listas tenham o mesmo tamanho */
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-me {
+  border-top: 6px solid #4caf50;
+} /* Verde */
+.user-friend {
+  border-top: 6px solid #f56897;
+} /* Rosa */
+
+h3 {
+  margin-top: 0;
+  text-align: center;
+  color: #eee;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+}
+
+/* Inputs e Botões das Listas */
+.input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background: #444;
+  color: white;
+}
+
+.input-group button {
+  padding: 10px 15px;
+  background: #555;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+.input-group button:hover {
+  background: #777;
+}
+
+/* A área onde os itens aparecem */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1; /* Ocupa todo o espaço restante dentro dos 500px */
+  overflow-y: auto; /* Cria barra de rolagem se tiver muitos filmes */
+  padding-right: 5px; /* Espaço para a barra de rolagem não colar */
+}
+
+/* Personalizando a barra de rolagem */
+ul::-webkit-scrollbar {
+  width: 6px;
+}
+ul::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 3px;
+}
+
+li {
+  background: #383838;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+li button {
+  background: none;
+  border: none;
+  color: #ff5555;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+/* --- COLUNA CENTRAL (Controles e Roleta) --- */
+.col-center {
+  flex: 1; /* Ocupa o espaço que sobrar no meio */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 350px; /* Garante que a roleta não fique espremida */
+}
+
+h1 {
+  color: #f5c518;
+  margin: 0 0 20px 0;
+  font-size: 2.2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Slider */
+.priority-control {
+  background: #2b2b2b;
+  padding: 15px 25px;
+  border-radius: 50px;
+  border: 1px solid #444;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 30px;
+}
+
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+input[type="range"] {
+  flex: 1;
+  accent-color: #f5c518;
+  cursor: pointer;
+}
+.percentage-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* Roleta */
+.wheel-container {
+  position: relative;
+  width: 400px; /* Tamanho fixo da roleta */
+  height: 400px;
+  margin-bottom: 25px;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  border: 6px solid #2b2b2b;
+}
+
+.pointer {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 40px solid white;
+  z-index: 10;
+  filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.5));
+}
+
+#btn-spin {
+  width: 80%;
+  padding: 15px 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  background: #f5c518;
+  color: black;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(245, 197, 24, 0.3);
+  transition: transform 0.2s, background 0.2s;
+}
+#btn-spin:hover {
+  transform: scale(1.05);
+  background: #ffca28;
+}
+#btn-spin:disabled {
+  background: #555;
+  transform: none;
+  box-shadow: none;
+  cursor: not-allowed;
+  color: #888;
+}
+
+/* MODAL (JANELA DE RESULTADO) */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+.modal.open {
+  display: flex;
+}
+
+.modal-content {
+  background: #222;
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid #f5c518;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(245, 197, 24, 0.2);
+  min-width: 300px;
+}
+.modal-content h1 {
+  font-size: 2.5rem;
+  margin: 20px 0;
+  color: #f5c518;
+}
+.modal-content button {
+  padding: 10px 25px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* RESPONSIVIDADE (SE A TELA FOR PEQUENA) */
+@media (max-width: 950px) {
+  .layout-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .col-side {
+    width: 100%;
+    flex: none;
+    max-width: 400px;
+  }
+  .list-box {
+    height: 300px; /* Listas menores no celular */
+  }
+  .col-center {
+    order: -1;
+    margin-bottom: 20px;
+  } /* Roleta sobe pro topo */
+  .wheel-container {
+    width: 300px;
+    height: 300px;
+  } /* Roleta menor */
+}
