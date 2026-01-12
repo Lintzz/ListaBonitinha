@@ -1,297 +1,410 @@
-/* Reset Básico */
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #1a1a1a;
-  color: white;
+  font-family: "Nunito", sans-serif;
+  background-color: #e3e5de;
+  color: #4a4a4a;
   margin: 0;
-  /* Removemos o height: 100vh fixo para evitar que esmague as coisas em telas pequenas */
+  padding: 20px;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center; /* Centraliza tudo verticalmente na tela */
-  padding: 20px;
 }
 
-/* CONTAINER PRINCIPAL */
-.layout-container {
-  display: flex;
-  justify-content: center; /* Junta as colunas no meio */
-  align-items: flex-start; /* Alinha tudo pelo topo */
-  width: 100%;
-  max-width: 1200px; /* Limite para não ficar esticado em monitores ultrawide */
-  gap: 30px; /* Espaço entre as colunas */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-/* COLUNAS LATERAIS (AS LISTAS) */
-.col-side {
-  /* Tamanho FIXO para as listas. Elas não esticam nem encolhem. */
-  flex: 0 0 300px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Estilo da Caixa da Lista */
-.list-box {
-  background: #2b2b2b;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-
-  /* Altura FIXA para garantir que as duas listas tenham o mesmo tamanho */
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-me {
-  border-top: 6px solid #4caf50;
-} /* Verde */
-.user-friend {
-  border-top: 6px solid #f56897;
-} /* Rosa */
-
-h3 {
-  margin-top: 0;
+/* HEADER */
+header {
   text-align: center;
-  color: #eee;
-  border-bottom: 1px solid #444;
-  padding-bottom: 10px;
+  margin-bottom: 30px;
 }
 
-/* Inputs e Botões das Listas */
-.input-group {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 15px;
+h1 {
+  color: #ff8fa2;
+  text-shadow: 2px 2px 0 #fff;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
 }
 
-input[type="text"] {
-  flex: 1;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  background: #444;
-  color: white;
-}
-
-.input-group button {
-  padding: 10px 15px;
-  background: #555;
+.btn-main-action {
+  background: #ffb5c0;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-weight: bold;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  font-weight: 800;
   cursor: pointer;
-  font-size: 1.2rem;
-  line-height: 1;
+  box-shadow: 0 4px 10px rgba(255, 181, 192, 0.4);
+  transition: transform 0.2s, background 0.2s;
 }
-.input-group button:hover {
-  background: #777;
+.btn-main-action:hover {
+  transform: scale(1.05);
+  background: #ff9fb0;
 }
 
-/* A área onde os itens aparecem */
+/* LISTAS */
+.lists-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 700px) {
+  .lists-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.list-card {
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  height: 500px; /* Altura fixa para scroll funcionar */
+  display: flex;
+  flex-direction: column;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.list-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.btn-add-item {
+  background: #4a4a4a;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.btn-add-item:hover {
+  background: #ffb5c0;
+}
+
+/* FILTROS (CHIPS) */
+.filter-chips {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+.filter-chips::-webkit-scrollbar {
+  height: 4px;
+}
+.filter-chips::-webkit-scrollbar-thumb {
+  background: #eee;
+  border-radius: 2px;
+}
+
+.chip {
+  background: #f0f0f0;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.chip:hover {
+  background: #e0e0e0;
+}
+.chip.active {
+  background: #ffb5c0;
+  color: white;
+}
+
+/* AREA DE ITENS */
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  flex: 1; /* Ocupa todo o espaço restante dentro dos 500px */
-  overflow-y: auto; /* Cria barra de rolagem se tiver muitos filmes */
-  padding-right: 5px; /* Espaço para a barra de rolagem não colar */
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px;
 }
-
-/* Personalizando a barra de rolagem */
+/* Scrollbar bonita */
 ul::-webkit-scrollbar {
   width: 6px;
 }
 ul::-webkit-scrollbar-thumb {
-  background: #555;
+  background: #f0f0f0;
   border-radius: 3px;
 }
 
 li {
-  background: #383838;
-  margin-bottom: 8px;
-  padding: 10px;
-  border-radius: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.95rem;
+  background: #fcfcfc;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
-li button {
+.li-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.btn-delete {
   background: none;
   border: none;
-  color: #ff5555;
-  cursor: pointer;
-  font-size: 1.1rem;
-}
-
-/* --- COLUNA CENTRAL (Controles e Roleta) --- */
-.col-center {
-  flex: 1; /* Ocupa o espaço que sobrar no meio */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-width: 350px; /* Garante que a roleta não fique espremida */
-}
-
-h1 {
-  color: #f5c518;
-  margin: 0 0 20px 0;
-  font-size: 2.2rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Slider */
-.priority-control {
-  background: #2b2b2b;
-  padding: 15px 25px;
-  border-radius: 50px;
-  border: 1px solid #444;
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: 30px;
-}
-
-.slider-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  font-weight: bold;
-  margin: 5px 0;
-}
-input[type="range"] {
-  flex: 1;
-  accent-color: #f5c518;
-  cursor: pointer;
-}
-.percentage-display {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-/* Roleta */
-.wheel-container {
-  position: relative;
-  width: 400px; /* Tamanho fixo da roleta */
-  height: 400px;
-  margin-bottom: 25px;
-}
-
-canvas {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-  border: 6px solid #2b2b2b;
-}
-
-.pointer {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-top: 40px solid white;
-  z-index: 10;
-  filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.5));
-}
-
-#btn-spin {
-  width: 80%;
-  padding: 15px 0;
+  color: #666;
   font-size: 1.2rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  background: #f5c518;
-  color: black;
-  border: none;
-  border-radius: 50px;
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(245, 197, 24, 0.3);
-  transition: transform 0.2s, background 0.2s;
 }
-#btn-spin:hover {
-  transform: scale(1.05);
-  background: #ffca28;
-}
-#btn-spin:disabled {
-  background: #555;
-  transform: none;
-  box-shadow: none;
-  cursor: not-allowed;
-  color: #888;
+.btn-delete:hover {
+  color: #ff5555;
 }
 
-/* MODAL (JANELA DE RESULTADO) */
-.modal {
+/* BADGES */
+.badge {
+  font-size: 0.65rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.badge.anime {
+  background: #9b59b6;
+}
+.badge.serie {
+  background: #3498db;
+}
+.badge.filme {
+  background: #e67e22;
+}
+
+/* MODAIS */
+.modal-overlay {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 100;
   justify-content: center;
   align-items: center;
-  z-index: 2000;
 }
-.modal.open {
+.modal-overlay.open {
   display: flex;
 }
 
-.modal-content {
-  background: #222;
-  padding: 40px;
+.modal-box {
+  background: white;
+  padding: 25px;
   border-radius: 20px;
-  border: 2px solid #f5c518;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 4px solid #ffb5c0;
   text-align: center;
-  box-shadow: 0 0 50px rgba(245, 197, 24, 0.2);
-  min-width: 300px;
-}
-.modal-content h1 {
-  font-size: 2.5rem;
-  margin: 20px 0;
-  color: #f5c518;
-}
-.modal-content button {
-  padding: 10px 25px;
-  background: #444;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
-/* RESPONSIVIDADE (SE A TELA FOR PEQUENA) */
-@media (max-width: 950px) {
-  .layout-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  .col-side {
-    width: 100%;
-    flex: none;
-    max-width: 400px;
-  }
-  .list-box {
-    height: 300px; /* Listas menores no celular */
-  }
-  .col-center {
-    order: -1;
-    margin-bottom: 20px;
-  } /* Roleta sobe pro topo */
-  .wheel-container {
-    width: 300px;
-    height: 300px;
-  } /* Roleta menor */
+.modal-box input,
+.modal-box select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 15px 0;
+  border-radius: 10px;
+  border: 2px solid #eee;
+  font-size: 1rem;
+}
+.modal-box label {
+  display: block;
+  text-align: left;
+  font-weight: bold;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.btn-cancel {
+  background: #e0e0e0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #555;
+  font-weight: bold;
+}
+.btn-confirm {
+  background: #ffb5c0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
+.btn-confirm:hover {
+  background: #ff9fb0;
+}
+
+/* Roleta */
+.wheel-wrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 0 auto 20px auto;
+}
+canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 6px solid #4a4a4a;
+}
+.pointer {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid #ffb5c0;
+  z-index: 10;
+}
+#btn-spin {
+  width: 100%;
+  padding: 12px;
+  background: #4a4a4a;
+  color: white;
+  font-weight: 900;
+  border: none;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+#btn-spin:disabled {
+  background: #999;
+}
+.wheel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.btn-close-x {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 0.5;
+}
+.filters {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+/* Botão de Perigo (Apagar) */
+.btn-danger {
+  background: #ff6b6b; /* Um vermelho suave */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.btn-danger:hover {
+  background: #ff5252;
+}
+
+/* --- AUTOCOMPLETE TMDB --- */
+.autocomplete-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.suggestions-box {
+  position: absolute;
+  top: 100%; /* Logo abaixo do input */
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #ffb5c0;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none; /* Escondido por padrão */
+  text-align: left;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-box.visible {
+  display: block;
+}
+
+.suggestions-box li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  margin: 0;
+  border-radius: 0;
+}
+
+.suggestions-box li:hover {
+  background-color: #fdf0f2; /* Um rosa bem clarinho */
+}
+
+.suggestions-box li img {
+  width: 30px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.suggestion-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestion-title {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.suggestion-year {
+  font-size: 0.75rem;
+  color: #888;
 }

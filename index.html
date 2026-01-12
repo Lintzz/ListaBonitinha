@@ -3,69 +3,167 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Roleta de Filmes</title>
+    <title>Minha Lista Geek Compartilhada</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div class="layout-container">
-      <div class="col-side col-left">
-        <div class="list-box user-me">
-          <h3>Minha Lista 🟢</h3>
-          <div class="input-group">
-            <input type="text" id="input-me" placeholder="Filme..." />
-            <button onclick="addItem('me')">+</button>
+    <div class="container">
+      <header>
+        <h1>Lista bonitinha</h1>
+        <button class="btn-main-action" onclick="openWheelModal()">
+          SORTEAR
+        </button>
+      </header>
+
+      <div class="lists-grid">
+        <div class="list-card">
+          <div class="list-header">
+            <p></p>
+            <h2>Estamos Assistindo</h2>
+            <button class="btn-add-item" onclick="openAddModal('watching')">
+              +
+            </button>
           </div>
-          <ul id="list-me"></ul>
+
+          <div class="filter-chips">
+            <button
+              class="chip active"
+              onclick="setFilter('watching', 'all', this)"
+            >
+              Todos
+            </button>
+            <button class="chip" onclick="setFilter('watching', 'anime', this)">
+              Animes
+            </button>
+            <button class="chip" onclick="setFilter('watching', 'serie', this)">
+              Séries
+            </button>
+            <button class="chip" onclick="setFilter('watching', 'filme', this)">
+              Filmes
+            </button>
+          </div>
+
+          <ul id="list-watching"></ul>
         </div>
-      </div>
 
-      <div class="col-center">
-
-        <div class="priority-control">
-          <div class="slider-wrapper">
-            <span>Eu</span>
-            <input
-              type="range"
-              id="slider"
-              min="0"
-              max="100"
-              value="50"
-              oninput="updatePercentage()"
-            />
-            <span>Ela</span>
+        <div class="list-card">
+          <div class="list-header">
+            <p></p>
+            <h2>Queremos Assistir</h2>
+            <button class="btn-add-item" onclick="openAddModal('towatch')">
+              +
+            </button>
           </div>
-          <div class="percentage-display">
-            <span id="perc-me" style="color: #4caf50">50%</span>
-            <span id="perc-friend" style="color: #e91e63">50%</span>
+
+          <div class="filter-chips">
+            <button
+              class="chip active"
+              onclick="setFilter('towatch', 'all', this)"
+            >
+              Todos
+            </button>
+            <button class="chip" onclick="setFilter('towatch', 'anime', this)">
+              Animes
+            </button>
+            <button class="chip" onclick="setFilter('towatch', 'serie', this)">
+              Séries
+            </button>
+            <button class="chip" onclick="setFilter('towatch', 'filme', this)">
+              Filmes
+            </button>
           </div>
-        </div>
 
-        <div class="wheel-container">
-          <div class="pointer">▼</div>
-          <canvas id="wheelCanvas" width="500" height="500"></canvas>
-        </div>
-
-        <button id="btn-spin" onclick="spinWheel()">GIRAR A ROLETA!</button>
-      </div>
-
-      <div class="col-side col-right">
-        <div class="list-box user-friend">
-          <h3>Lista Dela 🔴</h3>
-          <div class="input-group">
-            <input type="text" id="input-friend" placeholder="Filme..." />
-            <button onclick="addItem('friend')">+</button>
-          </div>
-          <ul id="list-friend"></ul>
+          <ul id="list-towatch"></ul>
         </div>
       </div>
     </div>
 
-    <div id="result-modal" class="modal">
-      <div class="modal-content">
+    <div id="modal-add" class="modal-overlay">
+      <div class="modal-box">
+        <h3 id="modal-add-title">Adicionar Novo</h3>
+
+        <div class="autocomplete-wrapper">
+          <input
+            type="text"
+            id="new-item-name"
+            placeholder="Digite o nome (ex: Shrek)..."
+            autocomplete="off"
+          />
+          <ul id="suggestions-list" class="suggestions-box"></ul>
+        </div>
+
+        <label>Tipo:</label>
+        <select id="new-item-type">
+          <option value="anime">Anime</option>
+          <option value="serie">Série</option>
+          <option value="filme">Filme</option>
+        </select>
+
+        <div class="modal-actions">
+          <button class="btn-cancel" onclick="closeModals()">Cancelar</button>
+          <button class="btn-confirm" onclick="confirmAddItem()">
+            Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-wheel" class="modal-overlay">
+      <div class="modal-box wheel-box">
+        <div class="wheel-header">
+          <h3>Configurar Sorteio</h3>
+          <button class="btn-close-x" onclick="closeModals()">&times;</button>
+        </div>
+
+        <div class="filters">
+          <select id="spin-source" onchange="updateWheel()">
+            <option value="towatch">Quero Assistir</option>
+            <option value="watching">Assistindo</option>
+          </select>
+
+          <select id="spin-filter" onchange="updateWheel()">
+            <option value="all">Qualquer Tipo</option>
+            <option value="anime">Só Animes</option>
+            <option value="serie">Só Séries</option>
+            <option value="filme">Só Filmes</option>
+          </select>
+        </div>
+
+        <div class="wheel-wrapper">
+          <div class="pointer">▼</div>
+          <canvas id="wheelCanvas" width="350" height="350"></canvas>
+        </div>
+
+        <button id="btn-spin" onclick="spinWheel()">GIRAR!</button>
+      </div>
+    </div>
+
+    <div id="modal-result" class="modal-overlay" style="z-index: 200">
+      <div class="modal-box result-box">
         <h3>Vamos assistir:</h3>
-        <h1 id="winner-text">...</h1>
-        <p id="winner-source">...</p>
-        <button onclick="closeModal()">Fechar</button>
+        <h1 id="winner-name">...</h1>
+        <div id="winner-tag" class="badge">TYPE</div>
+        <button class="btn-confirm" onclick="closeModals()">Legal!</button>
+      </div>
+    </div>
+
+    <div id="modal-confirm" class="modal-overlay" style="z-index: 300">
+      <div class="modal-box">
+        <h3>Tem certeza? 🗑️</h3>
+        <p>
+          Você quer mesmo apagar este item? Essa ação não pode ser desfeita.
+        </p>
+
+        <div class="modal-actions">
+          <button class="btn-cancel" onclick="closeModals()">Cancelar</button>
+          <button class="btn-danger" onclick="executeDelete()">
+            Sim, Apagar
+          </button>
+        </div>
       </div>
     </div>
 
